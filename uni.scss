@@ -1,0 +1,65 @@
+@use "sass:math";
+@import '@/uni_modules/uni-scss/variables.scss';
+
+/* 字體 */
+$uni-font-size-xs:14px;
+$uni-font-size-base:14px;
+$uni-font-size-sm:18px;
+$uni-font-size-lg:20px;
+
+/* 圖片尺寸 */
+$uni-img-size-sm:40rpx;
+$uni-img-size-base:52rpx;
+$uni-img-size-lg:80rpx;
+
+/* Border Radius */
+$uni-border-radius-sm: 6rpx;
+$uni-border-radius-base: 8rpx;
+$uni-border-radius-lg: 12rpx;
+$uni-border-radius-circle: 50%;
+
+/* 水平間距 */
+$uni-spacing-row-sm: 10px;
+$uni-spacing-row-base: 20rpx;
+$uni-spacing-row-lg: 30rpx;
+
+/* 垂直間距 */
+$uni-spacing-col-sm: 8rpx;
+$uni-spacing-col-base: 16rpx;
+$uni-spacing-col-lg: 24rpx;
+
+/* 透明度 */
+$uni-opacity-disabled: 0.3; 
+
+/* 文章場景相關 */
+$uni-color-title: #2C405A; // 文章標題顏色
+$uni-font-size-title:18px;
+$uni-color-subtitle: #555555; // 二級標題顏色
+$uni-font-size-subtitle:16px;
+$uni-color-paragraph: #3F536E; // 文章段落顏色
+$uni-font-size-paragraph:14px;
+
+/* 背景顏色 */
+$uni-bg-color:#F5F5F5;
+$uni-bg-color-grey:#f8f8f8;
+$uni-bg-color-hover:#f1f1f1;//點擊狀態顏色
+$uni-bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩顏色
+$uni-theme-color:#1890FF;	//主題色
+
+/* 顏色 */
+$text-color:#303133;	//主要文字
+$text-color-1:#606266;	//常規文字
+$text-color-2:#909399;	//次要文字
+$text-color-3:#C0C4CC;	//佔位文字
+$text-color-black:#000000;	//基礎黑色
+
+//只讀文本
+$readonly-text: #8f939c;
+
+//間距
+$spacing-col-text: 2px;
+$spacing-col-mini: 4px;
+$spacing-col-small: 8px;	//默认
+$spacing-col-base: 10px;	//默认
+$spacing-col-medium: 12px;
+$spacing-col-large: 16px;

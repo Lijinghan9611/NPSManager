@@ -1,0 +1,289 @@
+.base-shadow {
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+}
+
+.base-shadow-small {
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* 统一按键样式 */
+.base-padding {
+	padding: $spacing-col-base;
+}
+.base-padding-tb {
+	padding: $spacing-col-base 0;
+}
+
+.base-padding-lr {
+	padding: 0 $spacing-col-base;
+}
+
+
+.base-margin {
+	margin: $spacing-col-base;
+}
+
+.base-margin-tb {
+	margin: $spacing-col-base 0;
+}
+
+.base-margin-lr {
+	margin: 0 $spacing-col-base;
+}
+
+.center {
+	text-align: center;
+}
+
+.link {
+	color: $uni-theme-color;
+	white-space: nowrap;
+	padding: 0 5px;
+}
+
+.link:active {
+	color: $uni-theme-color;
+}
+
+/* 以下为实现0.5px底部边界 */
+.underline {
+	position: relative;
+}
+
+.underline:before,
+.underline:after {
+	position: absolute;
+	content: ' ';
+	height: 1px;
+	width: 100%;
+	left: 0;
+	transform-origin: 0 0;
+	-webkit-transform-origin: 0 0;
+}
+
+/* .underline:before{顶部top: 0;background: #000;} */
+.underline:after {
+	bottom: 0;
+	border-bottom: 1px solid gainsboro;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
+	.underline:after,
+	.underline:before {
+		-webkit-transform: scaleY(0.667);
+	}
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	.underline:after,
+	.underline:before {
+		-webkit-transform: scaleY(0.5);
+	}
+}
+
+/* 以上为实现0.5px底部边界 */
+
+.hide {
+	display: none;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-align-items {
+	align-items: center;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
+.flex-wrap{
+	flex-wrap: wrap;
+}
+
+.info-list-item {
+	margin: 0 20rpx;
+	padding: 20rpx 0;
+}
+
+.radius-btn {
+	border-radius: 41rpx;
+}
+
+.list-box {
+	margin: $spacing-col-medium;
+	border-radius: $uni-border-radius-lg;
+	background-color: #ffffff;
+	// box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+	.title{
+		padding-left:$spacing-col-medium;
+	}
+	
+	.text {
+		padding: 0.2rem $spacing-col-medium;
+		font-size: $uni-font-size-xs;
+	}
+	
+	.list-item {
+		padding: 0.2rem $spacing-col-medium;
+		font-size: $uni-font-size-xs;
+		
+		&:active {
+			background-color: $uni-bg-color-hover;
+			border-radius: $uni-border-radius-lg;
+		}
+	}
+}
+.list-active {
+	background-color: $uni-bg-color-hover;
+}
+
+
+/* 统一按键样式 */
+.btn-primary {
+	font-size: $uni-font-size-base;
+	color: white !important;
+	background-color: $uni-theme-color !important;
+}
+
+.btn-hover {
+	opacity: 0.7;
+}
+
+
+
+//---自定义标题
+.status_bar {
+	height: var(--status-bar-height);
+	width: 100%;
+	background-color: $uni-theme-color;
+}
+
+.status_bar_nocolor {
+	height: var(--status-bar-height);
+	width: 100%;
+}
+
+.phone-content{
+	width: 100%;
+}
+
+//自適應寬度 50/100
+.adaptive-width{
+	width: 100%;
+}
+
+@media (min-width: 700px) {
+	.phone-content{
+		width: 50%;
+	}
+	
+	.flex .phone-content:not(:first-child){
+		margin-left: 20px;
+		width:calc(50% - 25px);
+	}
+	
+	.adaptive-width{
+		width: 50%;
+	}
+}
+
+.menu{
+	.menu-item{
+		padding: $spacing-col-medium;
+		
+		&:active{
+			background-color: $uni-bg-color-hover;
+		}
+	}
+	
+	.menu-icon{
+		margin-right: $spacing-col-base;
+		background-color: $uni-bg-color-hover;
+		padding: $spacing-col-mini;
+		border-radius: $uni-border-radius-sm;
+		height: 30px;
+		width: 30px;
+	}
+}
+
+.van-underline{
+	position: relative;
+	&::after{
+		position: absolute;
+		box-sizing: border-box;
+		content: " ";
+		pointer-events: none;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		border-bottom: 1px solid #DCDFE6;
+		transform: scaleY(.5);
+	}
+}
+
+.form {
+	.uni-forms-item {
+		&::after{
+			position: absolute;
+			box-sizing: border-box;
+			content: " ";
+			pointer-events: none;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			border-bottom: 1px solid #DCDFE6;
+			transform: scaleY(.5);
+		}
+		
+		&:has(.msg--active)::after{
+			position: absolute;
+			box-sizing: border-box;
+			content: " ";
+			pointer-events: none;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			border-bottom: 1px solid red;
+			transform: scaleY(.5);
+		}
+	}
+	
+	.uni-input-placeholder{
+		font-size: $uni-font-size-xs !important;
+	}
+	
+	::v-deep .uni-easyinput__content-textarea,
+	::v-deep .uni-data-checklist{
+		padding-left:10px;
+	}
+	
+	
+}
+
+.preview .form {
+	.uni-forms-item{
+		padding: $spacing-col-mini 0;
+	}
+}
+
+.medium-btn{
+	font-size: 16px !important;
+	line-height: 2 !important;
+}
+
+.base-button{
+	
+}
+
+//ipad等大屏端
+@media (min-width: 700px) {
+	.base-button{
+		display: inline-block;
+		padding-right: 50rpx;
+		padding-left: 50rpx;
+	}
+}
+
