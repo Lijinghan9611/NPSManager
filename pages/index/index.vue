@@ -72,8 +72,9 @@
 				this.$refs.popupForm.open();
 			},
 			goDetail(item) {
+				this.$store.commit("SET_CurrentServer", item);
 				uni.navigateTo({
-					url: "/pages/ServerInfo/ServerInfo?id=" + item.id
+					url: "/pages/ServerInfo/ServerInfo"
 				})
 			},
 			delItem(item) {

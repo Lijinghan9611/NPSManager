@@ -286,4 +286,16 @@
 		padding-left: 50rpx;
 	}
 }
+	
+.box-text{
+	font-size: $uni-font-size-base;
+	padding: $spacing-col-text $spacing-col-base;
+	background-color: #eee;
+	border-radius: 4px;
+}
+
+.box-text-active{
+	background-color: #1ab394;
+	color:#fff
+}
 

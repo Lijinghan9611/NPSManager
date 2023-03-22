@@ -1,12 +1,12 @@
 // 引入網絡插件
 import request from '@/libs/request/request.js';
 // 引入配置文件
-import Options from '@/config/options.js';
+import {ServerPath} from '@/config/options.js';
 import store from '@/store'
 
 // 全局配置
 request.setConfig({
-	baseUrl: Options.ServerPath, //需加入到域名白名單
+	baseUrl: ServerPath, //需加入到域名白名單
 	dataType: 'json', // 可刪除，默認為json
 	responseType: 'application/json', // 可刪除，默認為text
 	// 設置請求頭，支持所有請求頭設置，也可不設置，去掉header就行
@@ -17,7 +17,6 @@ request.setConfig({
 
 // 設置前請求攔截器
 request.interceptors.request(config => {
-	console.log(config)
 	// 配置參數和全局配置相同，此優先級最高，會覆蓋在其他地方的相同配置參數
 	// 追加請求頭，推薦
 	config.header.Authorization = store.state.token;
@@ -76,9 +75,6 @@ request.interceptors.response(res => {
 			Message: "请求失败"
 		};
 	}
-
-	data.code = data.code || data.Code;
-	data.message = data.message || data.Message;
 
 	return data; // 原樣返回
 })

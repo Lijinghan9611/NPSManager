@@ -12,9 +12,6 @@ try {
 	LoginInfo = {}
 }
 
-console.log("token : " + LoginInfo.token)
-LoginInfo.phone = 'ZS12345678'
-LoginInfo.userName = "Test User"
 const store = createStore({
 	state: {
 		login: LoginInfo.token && LoginInfo.token.trim() != '' ? true : false, //是否已經登錄
@@ -22,30 +19,20 @@ const store = createStore({
 		avatarUrl: LoginInfo.avatarUrl, //頭像
 		userID: LoginInfo.userID, //用戶ID
 		phone: LoginInfo.phone, //用戶手機號碼
-		MM: LoginInfo.MM,
 		userName: LoginInfo.userName, //用戶名
-		RoleName: LoginInfo.RoleName ? LoginInfo.RoleName : "", //角色
 		platform: "", //平台類型, ios android wx h5
 		IsIOS: false, //是否為ios
 		IsAndroid: false, //是否為android
 		appVersion: "",
 		ClientId: ClientId ? ClientId : "",
-		MenuList: LoginInfo.MenuList ? LoginInfo.MenuList : [], //菜單
+		currentServer:{}
 	},
 	mutations: {
 		/**
-		 * 設置菜單
+		 * 设置当前的服务器
 		 * */
-		SET_MenuList(state, MenuList) {
-			state.MenuList = MenuList;
-			uni.setStorageSync('LoginInfo', JSON.stringify(state));
-		},
-		/**
-		 * 設置密碼
-		 * */
-		SET_MM(state, info) {
-			console.log(info)
-			state.MM = info.MM;
+		SET_CurrentServer(state, inf) {
+			state.currentServer = inf;
 		},
 		/**
 		 * 設置token等信息

@@ -1,64 +1,72 @@
 const serverKey = "NPSServerList";
-function setServerItem(item){
+
+function setServerItem(item) {
 	delServerItem(item.id);
 	let list = getServers();
 	list.push(item);
 	uni.setStorageSync(serverKey, JSON.stringify(list));
 }
 
-function getServerItem(id){
+function getServerItem(id) {
 	let list = getServers();
 	return list.find(a => a.id === id);
 }
 
 
-function delServerItem(id){
+function delServerItem(id) {
 	let list = getServers();
 	let index = list.findIndex(a => a.id === id);
 	console.log(index)
-	if(index != -1){
+	if (index != -1) {
 		list.splice(index, 1);
 		uni.setStorageSync(serverKey, JSON.stringify(list));
 	}
 }
 
 
-function getServers(){
+function getServers() {
 	let list = uni.getStorageSync(serverKey);
-	console.log(list)
-	if(!list)
+	if (!list)
 		list = []
-	else{
-		try{
+	else {
+		try {
 			list = JSON.parse(list);
-		}catch(e){
+		} catch (e) {
 			console.log(e)
 			list = [];
 		}
 	}
-	
+
 	return list;
 }
 
 
 function showErrorFun(data) {
 	try {
-		console.log(data)
-		//接口出错提示设置
-		if (!data) {
-			uni.showToast({
-				icon:"error",
-				title:"获取失败",
-				position :"bottom"
+		
+		if(typeof data === "string"){
+			uni.showModal({
+				title: "获取失败",
+				content: data
 			});
 			return;
 		}
-	
+		
+		//接口出错提示设置
+		if (!data) {
+			uni.showToast({
+				icon: "error",
+				title: "获取失败",
+				position: "bottom"
+			});
+			return;
+		}
+
 		data.Message = data.Message || data.message || data.msg || data.errMsg;
 		if (data.Message) {
 			uni.showModal({
-				title:"获取失败",
-				position :data.Message
+				title: "获取失败",
+				content: data.Message
 			});
 			return;
 		}
@@ -66,8 +74,8 @@ function showErrorFun(data) {
 		//TODO handle the exception
 	}
 	uni.showModal({
-		title:"获取失败",
-		position : "获取失败,请重试"
+		title: "获取失败",
+		content: "获取失败,请重试"
 	});
 }
 
@@ -94,11 +102,56 @@ function formatDate(targetDate, type) {
 		return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + sec;
 }
 
+function formatBytes(sizeBytes) {
+	let memoryUnits = [{
+			unitName: 'bytes',
+			threshold: 1024,
+		},
+		{
+			unitName: 'KB',
+			threshold: 1024,
+		},
+		{
+			unitName: 'MB',
+			threshold: 1024,
+		}, {
+			unitName: 'GB',
+			threshold: 1024,
+		}, {
+			unitName: 'TB',
+			threshold: 1024,
+		},
+	]
+
+	let tempFileSize = sizeBytes;
+	let matchIndex = -1;
+
+	for (let i = 0, end = false; i < memoryUnits.length; i++) {
+		let memoryUnit = memoryUnits[i],
+			end = i === memoryUnits.length - 1
+		if (tempFileSize <= memoryUnit.threshold || end) {
+			matchIndex = i;
+			break;
+		}
+
+		tempFileSize = tempFileSize / memoryUnit.threshold
+	}
+	if(tempFileSize != 0)
+		tempFileSize = tempFileSize.toFixed(2);
+	return {
+		fileSize: tempFileSize,
+		unit:memoryUnits[matchIndex].unitName,
+		matchUnit: memoryUnits[matchIndex],
+		originalFileSize: sizeBytes,
+	};
+}
+
 export {
 	setServerItem,
 	getServers,
 	getServerItem,
 	delServerItem,
 	showErrorFun,
-	formatDate
+	formatDate,
+	formatBytes
 }
