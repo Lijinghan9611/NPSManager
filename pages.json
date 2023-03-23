@@ -2,7 +2,7 @@
 	"pages": [{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "NPS服务器列表"
+				"navigationBarTitleText": "NPS服务器管理"
 			}
 		}, {
 			"path": "pages/my/my",

@@ -18,6 +18,8 @@
 					<uni-data-checkbox mode="button" v-model="formData.connectType" :localdata="connList" />
 				</uni-forms-item>
 				
+				<view style="position: relative; top:-10px;color: red;text-align: left;">服务器数据仅存放到本地</view>
+				
 				<view class="btn-area flex">
 					<view class="flex-1">
 						<button class="medium-btn" @click="close()">取消</button>
@@ -34,6 +36,7 @@
 <script>
 	
 import {setServerItem, getServerItem} from "@/utils/common.js";
+import MD5 from 'crypto-js/md5';
 export default {
 	props: {
 		id :{
@@ -76,7 +79,8 @@ export default {
 				name: '',
 				url:"",
 				authKey:"",
-				connectType: 1
+				connectType: 1,
+				password:""
 			},
 			connList: [
 				{
@@ -117,6 +121,11 @@ export default {
 				}
 				else
 					res.id = this.id;
+				
+				if(res.password && res.password.length != "" && res.password.length != 32){
+					res.password = MD5(res.password).toString()
+				}
+					
 				console.log(res);
 				setServerItem(res);
 				this.close();

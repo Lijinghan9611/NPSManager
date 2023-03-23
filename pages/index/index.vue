@@ -1,19 +1,10 @@
 <template>
 	<view>
-		<BaseBox v-for="(item, index) in ServerList" :key="item.id" hover @longpress="delItem(item)"
-			@click="goDetail(item)">
-			<uni-title type="h3" class="underline" :title="item.name" align="left"></uni-title>
-			<view>
-				<BaseText title="链接">{{item.url}}</BaseText>
-				<BaseText title="秘钥">{{item.authKey}}</BaseText>
-			</view>
-			<view style="text-align: right;">
-				<button size="mini" type="primary" @click.stop="edit(item)">编辑</button>
-			</view>
-		</BaseBox>
+		<Server isShow :serverId="item.id" v-for="(item, index) in ServerList" :key="item.id" hover @longpress="delItem(item)"
+			@click="goDetail(item)"></Server>
 
 		<view class="center" style="margin-top: 10px;">
-			<button size="mini" type="primary" @click="show">添加</button>
+			<button size="mini" type="primary" @click="show">添加服务器</button>
 		</view>
 
 		<uni-popup-fix :is-mask-click="false" class="pop-form" ref="popupForm" type="center">
@@ -52,10 +43,12 @@
 
 	import ClientInfo from "/pages/client/clientInfo.vue"
 	import TunnelInfo from "/pages//tunnel/tunnelInfo.vue"
+	import Server from "../ServerInfo/Server.vue"
 	export default {
 		components:{
 			ClientInfo,
-			TunnelInfo
+			TunnelInfo,
+			Server
 		},
 		data() {
 			return {
@@ -79,11 +72,6 @@
 			init(){
 				this.collectList = getCollects();
 				console.log(this.collectList)
-			},
-			edit(item) {
-				this.editId = item.id;
-				this.showForm = true;
-				this.$refs.popupForm.open();
 			},
 			getData() {
 				let list = getServers();
@@ -157,6 +145,16 @@
 			border-top-left-radius: $uni-border-radius-base;
 			border-top-right-radius: $uni-border-radius-base;
 		}
+		
+		.title-content {
+			position: relative;
+		
+			.close-btn {
+				position: absolute;
+				right: 10px;
+				top: 12px;
+			}
+		}
 	}
 
 
@@ -164,13 +162,5 @@
 		width: 80%; //弹出宽度
 	}
 
-	.title-content {
-		position: relative;
-
-		.close-btn {
-			position: absolute;
-			right: 10px;
-			top: 12px;
-		}
-	}
+	
 </style>

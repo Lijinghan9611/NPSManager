@@ -1,32 +1,7 @@
 <template>
 	<view>
-		<BaseBox>
-			<uni-title type="h3" class="underline" :title="localServerData.name" align="left"></uni-title>
-			<BaseText title="链接">{{ localServerData.url }}</BaseText>
-			<BaseText title="秘钥">{{ localServerData.authKey }}</BaseText>
-			<BaseText title="服务器时间">
-				{{ serverTime }}
-				<text class="link" @click="getTime(1)">刷新</text>
-			</BaseText>
-
-			<view class="flex">
-				<view class="flex-1">
-					<BaseText title="ip">{{ onlineServerData.ip }}</BaseText>
-				</view>
-				<view class="flex-1">
-					<BaseText title="端口">{{ onlineServerData.bridgePort }}</BaseText>
-				</view>
-			</view>
-
-			<view class="flex">
-				<view class="flex-1">
-					<BaseText title="桥接模式">{{ onlineServerData.bridgeType }}</BaseText>
-				</view>
-				<view class="flex-1">
-					<BaseText title="客戶端数量">{{ onlineServerData.total }}</BaseText>
-				</view>
-			</view>
-		</BaseBox>
+		<Server :serverId="serverId"></Server>
+		
 		<view class="base-margin"><uni-title type="h3" title="客戶端列表" align="left"></uni-title></view>
 
 		<BaseBox @click="goDetail(item)" hover v-for="item in onlineServerData.rows" :key="item.Id">
@@ -70,15 +45,18 @@
 
 <script>
 import { GetServerTime, GetClientList, PostDelClient } from '@/api/api.js';
-import { getServerItem, formatDate, formatBytes, setCollectItem, getCollectItem, delCollectItem } from '@/utils/common.js';
+import { formatDate, formatBytes, setCollectItem, getCollectItem, delCollectItem } from '@/utils/common.js';
 
 import { timeOutTimes } from '@/config/options.js';
+import Server from "./Server.vue"
 export default {
+	components:{
+		Server
+	},
 	data() {
 		return {
 			serverId: '',
 			serverTime: '',
-			localServerData: {},
 			onlineServerData: {
 				rows: []
 			},
@@ -137,10 +115,8 @@ export default {
 			}
 			this.stopGetData();
 		},
-		async init(load) {
-			this.localServerData = getServerItem(this.serverId);
+		init(load) {
 			this.loadData(load);
-			this.getTime();
 			this.startGetData();
 		},
 		startGetData() {
@@ -182,21 +158,6 @@ export default {
 				})
 				.catch(error => {
 					if (load) uni.hideLoading();
-					this.$showError(error);
-				});
-		},
-		getTime(loading) {
-			if (loading)
-				uni.showLoading({
-					title: '加载中，请稍候...'
-				});
-			GetServerTime(this.serverId)
-				.then(res => {
-					if (loading) uni.hideLoading();
-					this.serverTime = formatDate(new Date(res.time * 1000));
-				})
-				.catch(error => {
-					if (loading) uni.hideLoading();
 					this.$showError(error);
 				});
 		},
