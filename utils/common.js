@@ -23,7 +23,6 @@ function delServerItem(id) {
 	}
 }
 
-
 function getServers() {
 	let list = uni.getStorageSync(serverKey);
 	if (!list)
@@ -40,13 +39,56 @@ function getServers() {
 	return list;
 }
 
+const CollectKey = "CollectKey";
+function getCollects() {
+	let list = uni.getStorageSync(CollectKey);
+	if (!list)
+		list = []
+	else {
+		try {
+			list = JSON.parse(list);
+		} catch (e) {
+			console.log(e)
+			list = [];
+		}
+	}
+
+	return list;
+}
+
+function setCollectItem(item) {
+	delCollectItem(item.id);
+	let list = getCollects();
+	list.push(item);
+	uni.setStorageSync(CollectKey, JSON.stringify(list));
+}
+
+function getCollectItem(id) {
+	let list = getCollects();
+	return list.find(a => a.id === id);
+}
+
+
+function delCollectItem(id) {
+	let list = getCollects();
+	let index = list.findIndex(a => a.id === id);
+	console.log(index)
+	if (index != -1) {
+		list.splice(index, 1);
+		uni.setStorageSync(CollectKey, JSON.stringify(list));
+	}
+}
+
+
+
+
 
 function showErrorFun(data) {
 	try {
 		
 		if(typeof data === "string"){
 			uni.showModal({
-				title: "获取失败",
+				title: "请求失败",
 				content: data
 			});
 			return;
@@ -56,7 +98,7 @@ function showErrorFun(data) {
 		if (!data) {
 			uni.showToast({
 				icon: "error",
-				title: "获取失败",
+				title: "请求失败",
 				position: "bottom"
 			});
 			return;
@@ -65,7 +107,7 @@ function showErrorFun(data) {
 		data.Message = data.Message || data.message || data.msg || data.errMsg;
 		if (data.Message) {
 			uni.showModal({
-				title: "获取失败",
+				title: "请求失败",
 				content: data.Message
 			});
 			return;
@@ -74,8 +116,8 @@ function showErrorFun(data) {
 		//TODO handle the exception
 	}
 	uni.showModal({
-		title: "获取失败",
-		content: "获取失败,请重试"
+		title: "请求失败",
+		content: "请求失败,请重试"
 	});
 }
 
@@ -153,5 +195,9 @@ export {
 	delServerItem,
 	showErrorFun,
 	formatDate,
-	formatBytes
+	formatBytes,
+	getCollects,
+	setCollectItem,
+	getCollectItem,
+	delCollectItem
 }

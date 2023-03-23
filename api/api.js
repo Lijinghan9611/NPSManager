@@ -101,6 +101,36 @@ async function PostDelHost(id, data) {
 	return GetData("/index/delhost/", id, data);
 }
 
+async function PostDelClient(id, data) {
+	return GetData("/client/del/", id, data);
+}
+
+async function PostAddClient(id, data) {
+	return GetData("/client/add/", id, data);
+}
+async function PostEditClient(id, data) {
+	return GetData("/client/edit/", id, data);
+}
+async function PostAddHost(id, data) {
+	return GetData("/index/addhost/", id, data);
+}
+async function PostEditHost(id, data) {
+	return GetData("/index/edithost/", id, data);
+}
+
+async function PostAddTunnel(id, data) {
+	return GetData("/index/add/", id, data);
+}
+async function PostEditTunnel(id, data) {
+	return GetData("/index/edit/", id, data);
+}
+
+async function GetOneTunnel(id, data) {
+	return GetData("/index/getonetunnel/", id, data);
+}
+
+
+
 export {
 	GetServerTime,
 	GetClientList,
@@ -110,5 +140,13 @@ export {
 	PostStartTunnel,
 	PostStopTunnel,
 	PostDelTunnel,
-	PostDelHost
+	PostDelHost,
+	PostDelClient,
+	PostAddClient,
+	PostEditClient,
+	PostAddHost,
+	PostEditHost,
+	PostAddTunnel,
+	PostEditTunnel,
+	GetOneTunnel
 }

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<BaseBox @click="goDetail(item)" v-for="item in list" :key="item.Id">
+		<BaseBox @click="editItem(item)" v-for="item in list" :key="item.Id">
 			<view class="flex flex-align-items">
 				<uni-title type="h4" :title="item.Remark?item.Remark : ' '" align="left"></uni-title>
 
@@ -29,7 +29,10 @@
 			</view>
 			<BaseText title="目标 (IP:端口)">{{ item.Target?.TargetStr }}</BaseText>
 
-			<view @click.stop style="text-align: right;">
+			<view @click.stop style="text-align: right;margin-top: 10px;">
+				<button type="primary" v-if="!item.IsCollect" style="margin-right: 10px;" @click.stop="CollectItem(item)" size="mini">收藏</button>
+				<button @click.stop="cancelCollectItem(item)" v-else style="margin-right: 10px;" size="mini">取消收藏</button>
+				
 				<button type="warn" style="margin-right: 10px;" @click.stop="delTunnel(item)" size="mini">删除</button>
 				<button type="warn" @click.stop="stopTunnel(item)" size="mini" v-if="item.Status">停止</button>
 				<button type="primary" @click.stop="startTunnel(item)" size="mini" v-else>启动</button>
@@ -42,6 +45,8 @@
 		</view>
 
 		<not-found :show="!foundData" :text="loaddingText"></not-found>
+		
+		<uni-fab :popMenu="false" @fabClick="editItem()" horizontal="right"></uni-fab>
 	</view>
 </template>
 
@@ -54,13 +59,15 @@
 	} from '@/api/api.js';
 	import {
 		formatDate,
-		formatBytes
+		formatBytes,
+		setCollectItem, getCollectItem, delCollectItem 
 	} from '@/utils/common.js';
 
 	export default {
 		props: {
 			id: String,
-			type: String
+			type: String,
+			serverId:String,
 		},
 		data() {
 			return {
@@ -70,7 +77,6 @@
 				foundData: true,
 				ReachBottom: false,
 				current: 0,
-				serverId: '',
 				list: {},
 				search: "",
 				page: 0,
@@ -80,17 +86,52 @@
 			};
 		},
 		created() {
-			this.serverId = this.$store.state.currentServer.id;
-			this.loaData();
+			this.loadData();
 		},
 		watch: {
 			type(newal) {
 				this.current = 1;
 				this.page = 0;
-				this.loaData();
+				this.loadData();
 			}
 		},
 		methods: {
+			checkIsCollect(item){
+				let checkItem = getCollectItem("tunnel-" + this.serverId + "-" + this.id + "-" + item.Id);
+				if(!checkItem)
+					item.IsCollect = false;
+				else 
+					item.IsCollect = true;
+			},
+			cancelCollectItem(item){
+				delCollectItem("tunnel-" + this.serverId + "-" + this.id + "-" + item.Id);
+				this.checkIsCollect(item);
+			},
+			CollectItem(item){
+				let data = {
+					id : "tunnel-" + this.serverId + "-" + this.id + "-" + item.Id,
+					data : JSON.stringify(this.clientInfo),
+					type: "tunnel",
+					localServerId: this.serverId,
+					clientId: this.id ,
+					tunnelId:item.Id
+				}
+				setCollectItem(data);
+				this.checkIsCollect(item);
+			},
+			editItem(item) {
+				if(item){
+					uni.navigateTo({
+						url: '/pages/tunnel/tunnel?clientId=' + this.id + "&tunnelType=" + this.type + "&data=" + JSON.stringify(item)
+					});
+				}
+				else{
+					uni.navigateTo({
+						url: '/pages/tunnel/tunnel?clientId=' + this.id + "&tunnelType=" + this.type
+					});
+				}
+				
+			},
 			delTunnel(item) {
 				uni.showModal({
 					title: '提示',
@@ -106,7 +147,7 @@
 									uni.showToast({
 										title: "操作成功"
 									})
-									this.loaData();
+									this.loadData();
 								})
 								.catch(error => {
 									this.$showError(error);
@@ -132,7 +173,7 @@
 									uni.showToast({
 										title: "操作成功"
 									})
-									this.loaData();
+									this.loadData();
 								})
 								.catch(error => {
 									this.$showError(error);
@@ -158,7 +199,7 @@
 									uni.showToast({
 										title: "操作成功"
 									})
-									this.loaData();
+									this.loadData();
 								})
 								.catch(error => {
 									this.$showError(error);
@@ -169,9 +210,9 @@
 			},
 			change(res) {
 				this.page = res.current - 1;
-				this.loaData();
+				this.loadData();
 			},
-			loaData() {
+			loadData() {
 				//tcp udp httpProx socks5 secret p2p
 				let offset = this.pageSize * (this.page)
 				GetTunnelList(this.serverId, {
@@ -183,6 +224,10 @@
 					})
 					.then(res => {
 						console.log(res);
+						
+						res.rows.forEach(a => {
+							this.checkIsCollect(a);
+						})
 						this.list = res.rows;
 						this.loaddingText = "没有找到数据"
 						this.foundData = true;

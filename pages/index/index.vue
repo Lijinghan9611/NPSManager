@@ -27,7 +27,18 @@
 				</view>
 			</view>
 		</uni-popup-fix>
-
+		
+		
+		<view v-if="collectList.length > 0">
+			<uni-title type="h3" class="base-margin" title="收藏快捷" align="left"></uni-title>
+			
+			<view v-for="(item, index) in collectList" :key="item.id">
+				<ClientInfo @updateCollect="updateCollect" isShow v-if="item.type == 'server'" :clientId='item.clientId' :serverId="item.localServerId" :collectId="item.id"></ClientInfo>
+				<TunnelInfo @updateCollect="updateCollect" isShow v-if="item.type == 'tunnel'" :clientId='item.clientId' :serverId="item.localServerId" :tunnelId="item.tunnelId" :collectId="item.id"></TunnelInfo>
+			</view>
+		</view>
+		
+		<view style="height: 100px;"></view>
 	</view>
 </template>
 
@@ -35,22 +46,40 @@
 	import {
 		getServers,
 		delServerItem,
-		setServerItem
+		setServerItem,
+		getCollects
 	} from "@/utils/common.js";
 
+	import ClientInfo from "/pages/client/clientInfo.vue"
+	import TunnelInfo from "/pages//tunnel/tunnelInfo.vue"
 	export default {
+		components:{
+			ClientInfo,
+			TunnelInfo
+		},
 		data() {
 			return {
 				ServerList: [],
 				menuList: [],
 				editId: "",
 				showForm: false,
+				collectList:[]
 			};
 		},
 		onLoad() {
 			this.getData();
 		},
+		onShow() {
+			this.init();
+		},
 		methods: {
+			updateCollect(){
+				this.init();
+			},
+			init(){
+				this.collectList = getCollects();
+				console.log(this.collectList)
+			},
 			edit(item) {
 				this.editId = item.id;
 				this.showForm = true;

@@ -57,13 +57,20 @@
 			</view>
 			<BaseText title="验证密钥">{{ item.VerifyKey }}</BaseText>
 			<BaseText title="客户端地址">{{ item.Addr }}</BaseText>
+			
+			<view @click.stop style="text-align: right;margin-top: 10px;">
+				<button type="warn" style="margin-right: 10px;" @click.stop="delItem(item)" size="mini">删除</button>
+				<button type="primary" @click.stop="editItem(item)" size="mini">编辑</button>
+			</view>
 		</BaseBox>
+		<view style="height: 100px;"></view>
+		<uni-fab :popMenu="false" @fabClick="editItem()" horizontal="right"></uni-fab>
 	</view>
 </template>
 
 <script>
-import { GetServerTime, GetClientList } from '@/api/api.js';
-import { getServerItem, formatDate, formatBytes } from '@/utils/common.js';
+import { GetServerTime, GetClientList, PostDelClient } from '@/api/api.js';
+import { getServerItem, formatDate, formatBytes, setCollectItem, getCollectItem, delCollectItem } from '@/utils/common.js';
 
 import { timeOutTimes } from '@/config/options.js';
 export default {
@@ -80,10 +87,9 @@ export default {
 	},
 	onLoad(opt) {
 		this.serverId = this.$store.state.currentServer.id;
-
-		this.init(1);
 	},
 	onShow() {
+		this.init(1);
 		this.startGetData();
 	},
 	onHide() {
@@ -93,6 +99,44 @@ export default {
 		this.stopGetData();
 	},
 	methods: {
+		
+		delItem(item) {
+			uni.showModal({
+				title: '提示',
+				content: '确定要删除客戶端吗？',
+				success: res => {
+					if (res.confirm) {
+						PostDelClient(this.serverId, {
+								id: item.Id,
+							})
+							.then(res => {
+								console.log(res);
+								uni.showToast({
+									title: "操作成功"
+								})
+								this.loadData();
+							})
+							.catch(error => {
+								this.$showError(error);
+							});
+		
+					}
+				}
+			});
+		},
+		editItem(item){
+			if(item?.Id){
+				uni.navigateTo({
+					url: "/pages/client/client?id=" + item.Id
+				})
+			}
+			else{
+				uni.navigateTo({
+					url: "/pages/client/client"
+				})
+			}
+			this.stopGetData();
+		},
 		async init(load) {
 			this.localServerData = getServerItem(this.serverId);
 			this.loadData(load);
@@ -131,7 +175,6 @@ export default {
 			})
 				.then(res => {
 					if (load) uni.hideLoading();
-					console.log(res);
 					if(!res.ip){
 						this.$showError("获取信息失败，请检查配置是否正确");
 					}
@@ -158,8 +201,9 @@ export default {
 				});
 		},
 		goDetail(item) {
+			this.stopGetData();
 			uni.navigateTo({
-				url: '/pages/TunnelAllList/TunnelAllList?id=' + item.Id
+				url: '/pages/TunnelAllList/TunnelAllList?id=' + item.Id + "&serverId=" + this.serverId
 			});
 		}
 	},
