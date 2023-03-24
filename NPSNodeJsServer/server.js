@@ -9,7 +9,7 @@ app.on('request', (req, res) => {
     try {
         let path = req.url.split("?")[0].split("#")[0];
         console.log(path)
-        if ((path == route_getdata) || (path == route_getdata + '/') && req.method == 'POST') {    //获取数据
+        if ((path == route_getdata || path == route_getdata + '/') && req.method == 'POST') {    //获取数据
             getdata(req, res);
         } else {    //404
             WriteData(res, "", 404);
@@ -20,4 +20,4 @@ app.on('request', (req, res) => {
 })
 
 
-app.listen(8124);
+app.listen(8026);
