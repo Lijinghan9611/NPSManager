@@ -30,12 +30,12 @@
 			<BaseText title="目标 (IP:端口)">{{ item.Target?.TargetStr }}</BaseText>
 
 			<view @click.stop style="text-align: right;margin-top: 10px;">
-				<button type="primary" v-if="!item.IsCollect" style="margin-right: 10px;" @click.stop="CollectItem(item)" size="mini">收藏</button>
+				<button type="default" class="btn-primary" hover-class="btn-hover" v-if="!item.IsCollect" style="margin-right: 10px;" @click.stop="CollectItem(item)" size="mini">收藏</button>
 				<button @click.stop="cancelCollectItem(item)" v-else style="margin-right: 10px;" size="mini">取消收藏</button>
 				
 				<button type="warn" style="margin-right: 10px;" @click.stop="delTunnel(item)" size="mini">删除</button>
 				<button type="warn" @click.stop="stopTunnel(item)" size="mini" v-if="item.Status">停止</button>
-				<button type="primary" @click.stop="startTunnel(item)" size="mini" v-else>启动</button>
+				<button type="default" class="btn-primary" hover-class="btn-hover" @click.stop="startTunnel(item)" size="mini" v-else>启动</button>
 			</view>
 		</BaseBox>
 
@@ -80,7 +80,7 @@
 				list: {},
 				search: "",
 				page: 0,
-				pageSize: 5, //this.$pageSize,
+				pageSize: this.$pageSize,
 				total: 0,
 				TunnelList: []
 			};

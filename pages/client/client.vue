@@ -47,7 +47,7 @@
 		<view style="height: 100px;"></view>
 		<view class="bottom-area">
 			<view class="btn-area">
-				<view class="btns"><button type="primary" class="base-button" @click="submitForm()">保 存</button></view>
+				<view class="btns"><button type="default" class="btn-primary" hover-class="btn-hover" @click="submitForm()">保 存</button></view>
 			</view>
 		</view>
 	</view>

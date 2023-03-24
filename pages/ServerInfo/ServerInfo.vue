@@ -35,7 +35,7 @@
 			
 			<view @click.stop style="text-align: right;margin-top: 10px;">
 				<button type="warn" style="margin-right: 10px;" @click.stop="delItem(item)" size="mini">删除</button>
-				<button type="primary" @click.stop="editItem(item)" size="mini">编辑</button>
+				<button type="default" class="btn-primary" hover-class="btn-hover" @click.stop="editItem(item)" size="mini">编辑</button>
 			</view>
 		</BaseBox>
 		<view style="height: 100px;"></view>

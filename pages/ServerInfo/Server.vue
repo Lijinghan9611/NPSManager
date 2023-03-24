@@ -1,6 +1,6 @@
 <template>
-	<view>
-		<BaseBox>
+	<view >
+		<BaseBox @click="click" :hover="isShow">
 			<uni-title type="h3" class="underline" :title="localServerData.name" align="left"></uni-title>
 			<BaseText title="链接">{{ localServerData.url }}</BaseText>
 
@@ -23,7 +23,7 @@
 			</view>
 			
 			<view style="text-align: right;" v-if="!isShow">
-				<button type="primary" style="margin-right: 10px;" @click.stop="editItem()" size="mini">编辑</button>
+				<button type="default" class="btn-primary" hover-class="btn-hover" style="margin-right: 10px;" @click.stop="editItem()" size="mini">编辑</button>
 			</view>
 		</BaseBox>
 		
@@ -71,6 +71,9 @@ export default {
 		this.init();
 	},
 	methods: {
+		click(){
+			this.$emit("click")
+		},
 		close() {
 			this.$refs.popupForm.close();
 			this.showForm = false;

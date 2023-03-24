@@ -226,17 +226,18 @@
 
 .form {
 	.uni-forms-item {
-		&::after{
-			position: absolute;
-			box-sizing: border-box;
-			content: " ";
-			pointer-events: none;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			border-bottom: 1px solid #DCDFE6;
-			transform: scaleY(.5);
-		}
+		position: relative;
+		// &::after{
+		// 	position: absolute;
+		// 	box-sizing: border-box;
+		// 	content: " ";
+		// 	pointer-events: none;
+		// 	right: 0;
+		// 	bottom: 0;
+		// 	left: 0;
+		// 	border-bottom: 1px solid #DCDFE6;
+		// 	transform: scaleY(.5);
+		// }
 		
 		&:has(.msg--active)::after{
 			position: absolute;

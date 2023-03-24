@@ -1,5 +1,5 @@
 <template>
-	<view class="box" :class="{ full : full}" :hover-class="hover ? 'list-active' : ''">
+	<view @click="click" class="box" :class="{ full : full}" :hover-class="hover ? 'list-active' : ''">
 		<slot></slot>
 	</view>
 </template>
@@ -21,7 +21,13 @@
 			return {
 
 			};
+		},
+		methods:{
+			click(){
+				this.$emit("click")
+			}
 		}
+		
 	}
 </script>
 

@@ -46,7 +46,7 @@ export default {
 			list: {},
 			search: '',
 			page: 0,
-			pageSize: 5, //this.$pageSize,
+			pageSize: this.$pageSize,
 			total: 0
 		};
 	},

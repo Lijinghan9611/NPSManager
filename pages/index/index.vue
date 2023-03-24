@@ -4,7 +4,7 @@
 			@click="goDetail(item)"></Server>
 
 		<view class="center" style="margin-top: 10px;">
-			<button size="mini" type="primary" @click="show">添加服务器</button>
+			<button size="mini" type="default" class="btn-primary" hover-class="btn-hover" @click="show">添加服务器</button>
 		</view>
 
 		<uni-popup-fix :is-mask-click="false" class="pop-form" ref="popupForm" type="center">
@@ -21,7 +21,9 @@
 		
 		
 		<view v-if="collectList.length > 0">
-			<uni-title type="h3" class="base-margin" title="收藏快捷" align="left"></uni-title>
+			<view class="base-margin-lr">
+				<uni-title type="h3"  title="收藏快捷" align="left"></uni-title>
+			</view>
 			
 			<view v-for="(item, index) in collectList" :key="item.id">
 				<ClientInfo @updateCollect="updateCollect" isShow v-if="item.type == 'server'" :clientId='item.clientId' :serverId="item.localServerId" :collectId="item.id"></ClientInfo>

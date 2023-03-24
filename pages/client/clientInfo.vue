@@ -2,8 +2,8 @@
 	<view>
 		<BaseBox :hover="isShow" @click="GotoDetail" @longpress="delItem()">
 			<view class="flex flex-align-items underline">
-				<uni-title type="h4" :title="clientInfo.Remark" align="left"></uni-title>
-				<view class="rate-text flex-1">{{ formatRate(clientInfo.Rate?.NowRate) + '/s' }}</view>
+				<uni-title type="h4" class="flex-1" :title="clientInfo.Remark" align="left"></uni-title>
+				<view class="rate-text" style="margin-right: 10px;">{{ formatRate(clientInfo.Rate?.NowRate) + '/s' }}</view>
 				<view class="box-text box-text-active" v-if="clientInfo.Status">开放</view>
 				<view class="box-text" v-else>关闭</view>
 			</view>
@@ -26,11 +26,14 @@
 					<BaseText title="流量(出)">{{ formatBytesToStr(clientInfo.Flow?.ExportFlow) }}</BaseText>
 				</view>
 			</view>
-			<BaseText title="验证密钥">{{ clientInfo.VerifyKey }}</BaseText>
+			<BaseText title="验证密钥">
+				<text>{{ clientInfo.VerifyKey }}</text> 
+				<text style="margin-left: 10px;" class="link" @click.stop="copy(clientInfo.VerifyKey)">复制</text>
+			</BaseText>
 			<BaseText title="客户端地址">{{ clientInfo.Addr }}</BaseText>
 			
 			<view v-if="clientInfo.Id && !isShow" style="text-align: right;">
-				<button type="primary" v-if="!IsCollect" style="margin-right: 10px;" @click.stop="CollectItem()" size="mini">收藏</button>
+				<button type="default" class="btn-primary" hover-class="btn-hover" v-if="!IsCollect" style="margin-right: 10px;" @click.stop="CollectItem()" size="mini">收藏</button>
 				<button @click.stop="cancelCollectItem()" v-else style="margin-right: 10px;" size="mini">取消收藏</button>
 			</view>
 		</BaseBox>
@@ -71,7 +74,22 @@
 			this.stopGetData();
 		},
 		methods:{
+			copy(val){
+				uni.setClipboardData({
+					data: val,
+					success: function () {
+						uni.showToast({
+							icon:'success',
+							title:"复制成功"
+						})
+					}
+				});
+
+			},
 			delItem() {
+				if(!isShow){
+					return;
+				}
 				this.IsLongtap = true;
 				uni.showActionSheet({
 					itemList: ["取消收藏"],

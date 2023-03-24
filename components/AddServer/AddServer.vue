@@ -25,7 +25,7 @@
 						<button class="medium-btn" @click="close()">取消</button>
 					</view>
 					<view class="flex-1">
-						<button class="medium-btn" type="primary" @click="submit()">保存</button>
+						<button class="medium-btn btn-primary" type="default" hover-class="btn-hover" @click="submit()">保存</button>
 					</view>
 				</view>
 			</uni-forms>

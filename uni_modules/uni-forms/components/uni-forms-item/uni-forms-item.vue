@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-forms-item"
+	<view class="uni-forms-item underline"
 		:class="['is-direction-' + localLabelPos ,border?'uni-forms-item--border':'' ,border && isFirstBorder?'is-first-border':'']">
 		<slot name="label">
 			<view class="uni-forms-item__label" :class="{'no-label':!label && !isRequired}"

@@ -4,7 +4,6 @@ const { WriteData, isUrl } = require("./utils")
 
 function getdata(req, res) {
     // 数据格式
-    console.log('content-type', req.headers['content-type'])
     // 接收数据
     let postData = ''
     req.on('data', chunk => {
@@ -20,9 +19,7 @@ function getdata(req, res) {
         }
         else {
             req.query.url = decodeURIComponent(req.query.url);
-            console.log(req.query.url)
             let data = await post(req.query.url);
-            console.log(data)
             WriteData(res, "success", 200, data, 1);
         }
     })

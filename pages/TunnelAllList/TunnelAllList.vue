@@ -1,12 +1,12 @@
 <template>
 	<view>
-		<ClientInfo :serverId="serverId" :clientId="clientId"></ClientInfo>
+		<ClientInfo v-if="clientId && clientId != ''" :serverId="serverId" :clientId="clientId"></ClientInfo>
 		<view class="base-margin">
 			<v-tabs :tabs="tabs" pills v-model="current" activeColor="#fff"></v-tabs>
 		</view>
 
-		<TunnelList ref="tunnelList" v-if="IsTunnel" :id="clientId" :serverId="serverId" :type="tunnelType"></TunnelList>
-		<HostList ref="hostlist" v-else :id="clientId" :serverId="serverId"></HostList>
+		<TunnelList ref="tunnelList"  v-if="IsTunnel && clientId && clientId != ''" :id="clientId" :serverId="serverId" :type="tunnelType"></TunnelList>
+		<HostList ref="hostlist" v-else-if="clientId && clientId != ''" :id="clientId" :serverId="serverId"></HostList>
 
 	 </view>
 </template>

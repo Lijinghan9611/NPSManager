@@ -57,12 +57,12 @@
             
         }
     ],
-	"tabBar": {
-		"color": "#7A7E83",
-		"selectedColor": "#1d8dfc",
-		"borderStyle": "black",
-		"backgroundColor": "#F8F8F8"
-	},
+	// "tabBar": {
+	// 	"color": "#7A7E83",
+	// 	"selectedColor": "#1d8dfc",
+	// 	"borderStyle": "black",
+	// 	"backgroundColor": "#F8F8F8"
+	// },
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "NPS",
