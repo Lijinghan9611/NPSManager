@@ -6,13 +6,40 @@ import request from "@/libs/request/index.js"
 
 import MD5 from 'crypto-js/md5';
 
-function getConfig(item, data) {
+import { ServerPath } from "@/config/options.js"
+
+function getConfigAndPath(item, path) {
 	let config = {};
-	if (item.connectType == 1) {
+	if (item.connectType == 1) {	//直连
 		config.baseUrl = item.url
 	}
+	else { //通过转接接口
+		config.baseUrl = ServerPath
+		path = "?url=" + encodeURIComponent(item.url + path);
+	}
 
-	return config;
+	return {
+		path: path,
+		config : config,
+	};
+}
+
+
+async function GetData(path, id, data) {
+	let item = getServerItem(id);
+	let vifData = await GetToken(item);
+	data = {
+		...data,
+		...vifData
+	};
+	path += "?";
+	for (let key in data) {
+		path += key + "=" + data[key] + "&"
+	}
+	let config = getConfigAndPath(item, path);
+	
+	return request
+	 	.post(config.path, config.config);
 }
 
 function GetServerTime(id) {
@@ -20,10 +47,9 @@ function GetServerTime(id) {
 	if (!item)
 		return;
 
-	let config = getConfig(item);
-
+	let data = getConfigAndPath(item, '/auth/gettime');
 	return request
-		.post('/auth/gettime', config);
+		.post(data.path , data.config);
 }
 
 function GetServerTimeResult(id) {
@@ -47,22 +73,6 @@ async function GetToken(item) {
 	}
 }
 
-async function GetData(path, id, data) {
-	let item = getServerItem(id);
-	let vifData = await GetToken(item);
-	let config = getConfig(item);
-	data = {
-		...data,
-		...vifData
-	};
-	path += "?";
-	for (let key in data) {
-		path += key + "=" + data[key] + "&"
-	}
-
-	return request
-		.post(path, config);
-}
 
 
 async function GetClientList(id, data) {

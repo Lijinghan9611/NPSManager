@@ -75,7 +75,15 @@ request.interceptors.response(res => {
 			Message: "请求失败"
 		};
 	}
-
+	if(data.isFromProxy){
+		if(data.code == 1){
+			return data.data;
+		}
+		return {
+			Code: 500,
+			Message: data.msg
+		}
+	}
 	return data; // 原樣返回
 })
 
