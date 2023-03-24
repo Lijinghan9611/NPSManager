@@ -87,7 +87,7 @@
 
 			},
 			delItem() {
-				if(!isShow){
+				if(!this.isShow){
 					return;
 				}
 				this.IsLongtap = true;

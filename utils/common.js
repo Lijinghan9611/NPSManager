@@ -16,10 +16,18 @@ function getServerItem(id) {
 function delServerItem(id) {
 	let list = getServers();
 	let index = list.findIndex(a => a.id === id);
-	console.log(index)
 	if (index != -1) {
 		list.splice(index, 1);
 		uni.setStorageSync(serverKey, JSON.stringify(list));
+		
+		let collectList = getCollects();
+		let delList = collectList.filter(a => a.localServerId == id);
+		if(delList.length > 0){
+			delList.forEach(a => {
+				delCollectItem(a.id);
+			})
+		}
+		
 	}
 }
 

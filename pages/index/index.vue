@@ -31,7 +31,36 @@
 			</view>
 		</view>
 		
-		<view style="height: 100px;"></view>
+		<view style="height: 50px;"></view>
+		<view @click="showDes" class="description base-margin" :class="{'des-fixd' : collectList.length == 0}">
+			<view class="des-text link">使用说明</view>
+		</view>
+		
+		<uni-popup-fix class="pop-form" ref="popupDesc" type="center">
+			<view class="pop-content-form">
+				<view class="content-inner">
+					<view class="title-content">
+						<uni-title class="title" type="h4" title="使用说明" align="canter"></uni-title>
+						<text class="close-btn" @click="closeDesc">关闭</text>
+					</view>
+					<view class="content">
+						<BaseBox>
+							<view>
+								1、添加服务器，填写链接和秘钥，数据仅存放在本地。
+							</view>
+							<view>
+								2、通过转发服务器访问时，中间不存放任何数据。
+							</view>
+							<view>
+								3、本程序代码全开源，具体可在github搜索NPSManager或<text class="link" @click="copy">复制链接</text>
+								到浏览器打开。						
+							</view>
+						</BaseBox>
+					</view>
+				</view>
+			</view>
+		</uni-popup-fix>
+		
 	</view>
 </template>
 
@@ -68,16 +97,32 @@
 			this.init();
 		},
 		methods: {
+			copy(){
+				uni.setClipboardData({
+					data: 'https://github.com/Lijinghan9611/NPSManager',
+					success: function () {
+						uni.showToast({
+							icon:'success',
+							title:"复制成功"
+						})
+					}
+				});
+			},
+			closeDesc(){
+				this.$refs.popupDesc.close();
+			},
+			showDes(){
+				this.$refs.popupDesc.open();
+			},
 			updateCollect(){
 				this.init();
 			},
 			init(){
 				this.collectList = getCollects();
-				console.log(this.collectList)
 			},
 			getData() {
 				let list = getServers();
-				console.log(list);
+				this.init();
 				this.ServerList = list;
 			},
 			close() {
@@ -157,6 +202,10 @@
 				top: 12px;
 			}
 		}
+		
+		.content{
+			text-align: left;
+		}
 	}
 
 
@@ -165,4 +214,17 @@
 	}
 
 	
+	.description {
+		background-color: #fff;
+		margin-bottom: 20px;
+		& .des-text {
+			padding: $spacing-col-mini $spacing-col-base;
+		}
+	}
+	
+	.des-fixd{
+		position: fixed;
+		bottom: 0;
+		left: 0%;
+	}
 </style>

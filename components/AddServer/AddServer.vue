@@ -14,11 +14,16 @@
 					<BaseFormInput v-model="formData.authKey" placeholder="请输入"></BaseFormInput>
 				</uni-forms-item>
 				
-				<uni-forms-item label="是否直连:" name="connectType">
+				<!-- #ifndef MP-WEIXIN -->
+				<uni-forms-item label="连接方式:" name="connectType">
 					<uni-data-checkbox mode="button" v-model="formData.connectType" :localdata="connList" />
 				</uni-forms-item>
+				<view style="position: relative; top:-10px;color: red;text-align: left;">服务器数据仅存放到本地，选择代理时，数据通过服务器转发，适用于小程序等</view>
+				<!-- #endif -->
 				
-				<view style="position: relative; top:-10px;color: red;text-align: left;">服务器数据仅存放到本地</view>
+				<!-- #ifdef MP-WEIXIN -->
+				<view style="position: relative; top:-10px;color: red;text-align: left;">服务器数据仅存放到本地，小程序数据仅能通过代理服务器访问，代理服务器仅转发，不存放任何数据</view>
+				<!-- #endif -->
 				
 				<view class="btn-area flex">
 					<view class="flex-1">
@@ -79,16 +84,16 @@ export default {
 				name: '',
 				url:"",
 				authKey:"",
-				connectType: 1,
+				connectType: 2,
 				password:""
 			},
 			connList: [
 				{
-					text: '是',
+					text: '直连',
 					value: 1
 				},
 				{
-					text: '否',
+					text: '代理',
 					value: 2
 				}
 			]
