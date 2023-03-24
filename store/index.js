@@ -11,7 +11,7 @@ try {
 } catch (e) {
 	LoginInfo = {}
 }
-
+LoginInfo.currentServer = LoginInfo.currentServer || {}
 const store = createStore({
 	state: {
 		login: LoginInfo.token && LoginInfo.token.trim() != '' ? true : false, //是否已經登錄
@@ -25,7 +25,7 @@ const store = createStore({
 		IsAndroid: false, //是否為android
 		appVersion: "",
 		ClientId: ClientId ? ClientId : "",
-		currentServer:{}
+		currentServer: LoginInfo.currentServer
 	},
 	mutations: {
 		/**
@@ -33,6 +33,7 @@ const store = createStore({
 		 * */
 		SET_CurrentServer(state, inf) {
 			state.currentServer = inf;
+			uni.setStorageSync('LoginInfo', JSON.stringify(state));
 		},
 		/**
 		 * 設置token等信息
