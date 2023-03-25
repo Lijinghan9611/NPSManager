@@ -21,3 +21,12 @@ NPS 手机端管理
 微信小程序：由于小程序的特殊性，只能通过转发来请求网络
 
 ![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/weixin.png)
+
+## 预览
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview1.png)
+
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview2.png)
+
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview3.png)
+
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview4.png)
