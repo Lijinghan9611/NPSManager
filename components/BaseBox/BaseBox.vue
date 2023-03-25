@@ -22,12 +22,12 @@
 
 			};
 		},
-		methods:{
-			click(){
-				this.$emit("click")
+		methods: {
+			click() {
+				//this.$emit("click")
 			}
 		}
-		
+
 	}
 </script>
 
@@ -42,7 +42,7 @@
 	.full {
 		margin: 0;
 	}
-	
+
 	.list-active {
 		background-color: $uni-bg-color-hover;
 	}
