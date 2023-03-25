@@ -13,3 +13,11 @@ NPS 手机端管理
 
 部署nodejs服务端时
 服务端的config.js中的route_getdata需要和/config/options.js的ServerPath路径对应上
+
+## 发布
+安卓app:
+[release](https://github.com/Lijinghan9611/NPSManager/releases/tag/Latest)
+
+微信小程序：由于小程序的特殊性，只能通过转发来请求网络
+
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/weixin.png)
