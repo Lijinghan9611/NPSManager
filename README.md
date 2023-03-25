@@ -25,8 +25,8 @@ NPS 手机端管理
 ## 预览
 ![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview1.png)
 
-![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview2.png)
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview2.jpg)
 
-![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview3.png)
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview3.jpg)
 
-![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview4.png)
+![](https://raw.githubusercontent.com/Lijinghan9611/NPSManager/main/dist/preview4.jpg)
