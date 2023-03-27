@@ -1,6 +1,6 @@
 <template>
 	<view class="flex-1 flex flex-align-items" :class="{ input: !preview }">
-		<uni-easyinput :input-border="false" v-if="!preview" v-bind="$attrs" v-model="innerValue" />
+		<uni-easyinput :maxlength="maxLengthInner" :input-border="false" v-if="!preview" v-bind="$attrs" v-model="innerValue" />
 		<view v-else class="read-text">{{ modelValue }}</view>
 	</view>
 </template>
@@ -14,12 +14,21 @@ export default {
 		preview: {
 			type: Boolean,
 			default: false
+		},
+		maxlength: {
+			type: Number,
+			default: -1
 		}
 	},
 	data() {
 		return {
 			innerValue: this.modelValue
 		};
+	},
+	computed:{
+		maxLengthInner(){
+			return this.maxlength > 0 ? this.maxlength : -1;
+		}
 	},
 	watch: {
 		value(newVal) {

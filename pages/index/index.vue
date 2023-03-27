@@ -4,7 +4,8 @@
 			@click="goDetail(item)"></Server>
 
 		<view class="center" style="margin-top: 10px;">
-			<button size="mini" type="default" class="btn-primary" hover-class="btn-hover" @click="show">添加服务器</button>
+			<button size="mini" type="default"  hover-class="btn-hover" @click="copyConfig">复制配置文件</button>
+			<button size="mini" type="default" style="margin-left: 10px;" class="btn-primary" hover-class="btn-hover" @click="show">添加服务器</button>
 		</view>
 
 		<uni-popup-fix :is-mask-click="false" class="pop-form" ref="popupForm" type="center">
@@ -97,6 +98,23 @@
 			this.init();
 		},
 		methods: {
+			copyConfig(){
+				let data = {
+					servers:getServers(),
+					collects:getCollects()
+				}
+				
+				let copyValue = JSON.stringify(data);
+				uni.setClipboardData({
+					data: copyValue,
+					success: function () {
+						uni.showToast({
+							icon:'success',
+							title:"复制成功"
+						})
+					}
+				});
+			},
 			copy(){
 				uni.setClipboardData({
 					data: 'https://github.com/Lijinghan9611/NPSManager',
