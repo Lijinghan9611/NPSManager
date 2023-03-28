@@ -24,7 +24,9 @@
 		},
 		methods: {
 			click() {
-				//this.$emit("click")
+				// #ifdef MP-WEIXIN
+				this.$emit("click")
+				// #endif
 			}
 		}
 

@@ -1,7 +1,13 @@
 <template>
 	<view>
+		<view><uni-search-bar @confirm="startSearch" v-model="search" @cancel="startSearch(1)" @clear="startSearch(1)" />
+		</view>
+		
 		<BaseBox @click="editItem(item)" hover v-for="item in list" :key="item.Id">
-			<view class="flex flex-align-items"><uni-title type="h4" :title="item.Host" align="left"></uni-title></view>
+			<view class="flex flex-align-items">
+				<image src="/static/images/icon-net.png" class="item-icon"></image>
+				<uni-title type="h4" :title="item.Host" align="left"></uni-title>
+			</view>
 			<BaseText title="备注">{{ item.Remark }}</BaseText>
 			<view class="flex">
 				<view class="flex-1">
@@ -60,6 +66,12 @@ export default {
 		}
 	},
 	methods: {
+		startSearch(type) {
+			if(type === 1)
+				this.search = ""
+			this.page = 0;
+			this.loadData();
+		},
 		editItem(item) {
 			if(item){
 				uni.navigateTo({

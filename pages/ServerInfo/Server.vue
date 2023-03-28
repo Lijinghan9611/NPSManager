@@ -1,7 +1,11 @@
 <template>
 	<view>
 		<BaseBox @click="click" :hover="isShow">
-			<uni-title type="h3" class="underline" :title="localServerData.name" align="left"></uni-title>
+			<view class="flex flex-align-items underline">
+				<image src="/static/images/icon-server.png" class="item-icon"></image>
+				<uni-title type="h3" class="flex-1" :title="localServerData.name" align="left"></uni-title>
+			</view>
+			
 			<BaseText title="链接">{{ localServerData.url }}</BaseText>
 
 			<view class="flex">

@@ -1,7 +1,11 @@
 <template>
 	<view>
+		<view><uni-search-bar @confirm="startSearch" v-model="search" @cancel="startSearch(1)" @clear="startSearch(1)" />
+		</view>
+		
 		<BaseBox @click="editItem(item)" v-for="item in list" :key="item.Id">
 			<view class="flex flex-align-items">
+				<image src="/static/images/icon-tunnel.png" class="item-icon"></image>
 				<uni-title type="h4" :title="item.Remark?item.Remark : ' '" align="left"></uni-title>
 
 			</view>
@@ -96,6 +100,12 @@
 			}
 		},
 		methods: {
+			startSearch(type) {
+				if(type === 1)
+					this.search = ""
+				this.page = 0;
+				this.loadData();
+			},
 			checkIsCollect(item){
 				let checkItem = getCollectItem("tunnel-" + this.serverId + "-" + this.id + "-" + item.Id);
 				if(!checkItem)

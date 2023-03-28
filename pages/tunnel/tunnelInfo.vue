@@ -1,7 +1,11 @@
 <template>
 	<view>
 		<BaseBox hover @longpress="delItem(item)">
-			<view class="flex flex-align-items"><uni-title type="h4" :title="item.Remark ? item.Remark : ' '" align="left"></uni-title></view>
+			<view class="flex flex-align-items underline">
+				<image src="/static/images/icon-tunnel.png" class="item-icon"></image>
+				<uni-title type="h4" :title="item.Remark ? item.Remark : ' '" align="left"></uni-title>
+			</view>
+			
 			<view class="flex">
 				<view class="flex-1">
 					<BaseText title="运行状态">
@@ -25,19 +29,22 @@
 				</view>
 			</view>
 			<BaseText title="目标 (IP:端口)">{{ item.Target?.TargetStr }}</BaseText>
-
-			<view @click.stop style="text-align: right;margin-top: 10px;">
+			
+			
+			<view @click.stop class="flex flex-align-items" style="margin-top: 10px;">
+				<BaseText title="所属"  v-if="isShow">{{localServerData.name}}/{{clientInfo.Remark}}</BaseText>
+				<view class="flex-1"></view>
 				<button type="warn" @click.stop="stopTunnel(item)" size="mini" v-if="item.Status">停止</button>
-				<button type="primary" @click.stop="startTunnel(item)" size="mini" v-else>启动</button>
+				<button type="default" class="btn-primary" hover-class="btn-hover" @click.stop="startTunnel(item)" size="mini" v-else>启动</button>
 			</view>
 		</BaseBox>
 	</view>
 </template>
 
 <script>
-import { GetOneTunnel, PostStartTunnel, PostStopTunnel } from '@/api/api.js';
+import { GetOneTunnel, PostStartTunnel, PostStopTunnel ,GetClient} from '@/api/api.js';
 import {
-	delCollectItem 
+	delCollectItem ,getServerItem
 } from '@/utils/common.js';
 export default {
 	props: {
@@ -53,15 +60,37 @@ export default {
 	data() {
 		return {
 			item: {},
-			IsCollect: false
+			IsCollect: false,
+			clientInfo:{},
+			localServerData:{}
 		};
 	},
 	created() {
 		this.init();
+		this.localServerData = getServerItem(this.serverId);
+		this.GetClientInfo();
 	},
 	methods: {
 		init() {
 			this.loadData();
+		},
+		GetClientInfo(load) {
+			if (load)
+				uni.showLoading({
+					title: '加载中，请稍候...'
+				});
+			GetClient(this.serverId, {
+					id: this.clientId
+				})
+				.then(res => {
+					if (load) uni.hideLoading();
+					console.log(res);
+					this.clientInfo = res.data;
+				})
+				.catch(error => {
+					if (load) uni.hideLoading();
+					this.$showError(error);
+				});
 		},
 		loadData() {
 			GetOneTunnel(this.serverId, {

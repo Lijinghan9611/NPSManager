@@ -2,11 +2,13 @@
 	<view>
 		<BaseBox :hover="isShow" @click="GotoDetail" @longpress="delItem()">
 			<view class="flex flex-align-items underline">
+				<image src="/static/images/icon-conputer.png" class="item-icon"></image>
 				<uni-title type="h4" class="flex-1" :title="clientInfo.Remark" align="left"></uni-title>
 				<view class="rate-text" style="margin-right: 10px;">{{ formatRate(clientInfo.Rate?.NowRate) + '/s' }}</view>
 				<view class="box-text box-text-active" v-if="clientInfo.Status">开放</view>
 				<view class="box-text" v-else>关闭</view>
 			</view>
+			
 			<view class="flex">
 				<view class="flex-1">
 					<BaseText title="连接">
@@ -31,6 +33,8 @@
 				<text style="margin-left: 10px;" class="link" @click.stop="copy(clientInfo.VerifyKey)">复制</text>
 			</BaseText>
 			<BaseText title="客户端地址">{{ clientInfo.Addr }}</BaseText>
+			
+			<BaseText v-if="isShow" title="所属">{{localServerData.name}}</BaseText>
 			
 			<view v-if="clientInfo.Id && !isShow" style="text-align: right;">
 				<button type="default" class="btn-primary" hover-class="btn-hover" v-if="!IsCollect" style="margin-right: 10px;" @click.stop="CollectItem()" size="mini">收藏</button>
@@ -63,9 +67,11 @@
 				clientInfo:{},
 				IsCollect:false,
 				IsLongtap:false,
+				localServerData:{}
 			}
 		},
 		created() {
+			this.localServerData = getServerItem(this.serverId);
 			this.init();
 			this.startGetData();
 		},
@@ -184,5 +190,6 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	
 </style>

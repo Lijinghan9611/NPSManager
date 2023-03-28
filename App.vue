@@ -43,5 +43,12 @@
 		font-size: $uni-font-size-base;
 		color: $text-color;
 	}
+	
+	.item-icon{
+		height: 25px;
+		width: 25px;
+		padding: 2px;
+		margin-right: 8px;
+	}
 	// #endif
 </style>
