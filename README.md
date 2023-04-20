@@ -15,7 +15,6 @@ NPS 手机端管理
 服务端的config.js中的route_getdata需要和/config/options.js的ServerPath路径对应上
 
 ## 源碼：
-ssh://git@10.1.1.2:8222/han/NPSManager.git
 [gitee](https://gitee.com/FLB0821/npsmanager)
 [github](https://github.com/Lijinghan9611/NPSManager)
 
